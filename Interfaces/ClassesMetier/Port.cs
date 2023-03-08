@@ -114,7 +114,53 @@ namespace Interfaces.ClassesMetier
 
         public void EnregistrerArrivee(string imo)
         {
-            Navire n = 
+            if (this.NavireAttendus.ContainsKey(imo))
+            {
+                Navire nav = this.navireAttendus[imo];
+                if (nav is Tanker)
+                {
+                    if (nav.TonnageGT > 130000)
+                    {
+                        if (nBQuaisSuperTanker - 1 <= 0)
+                        {
+                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                            this.navireEnAttente.Add(nav.Imo, nav);
+                        }
+                        else { nBQuaisSuperTanker--; this.navireArrives.Add(nav.Imo, nav); }
+                    }
+                    else
+                    {
+                        if (nbQuaisTanker - 1 <= 0)
+                        {
+                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                            this.navireEnAttente.Add(nav.Imo, nav);
+                        }
+                        else { nbQuaisTanker--; this.navireArrives.Add(nav.Imo, nav); }
+                    }
+                }
+                else if (nav is Cargo)
+                {
+                    if (nbPortique - 1 <= 0)
+                    {
+                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                        this.navireEnAttente.Add(nav.Imo, nav);
+                    }
+                    else { nbPortique--; this.navireArrives.Add(nav.Imo, nav); }
+                }
+                else if (nav is Croisiere)
+                {
+                    if (nbQuaisPassager - 1 <= 0)
+                    {
+                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                        this.navireEnAttente.Add(nav.Imo, nav);
+                    }
+                    else { nbQuaisPassager--; this.navireArrives.Add(nav.Imo, nav); }
+                }
+            }
+            else
+            {
+                throw new GestionPortException("Le navire n'est pas attendu");
+            }
         }
         
 
