@@ -19,6 +19,17 @@ namespace Interfaces.ClassesMetier
             this.nbPassagersMax = nbPassagersMax;
         }
 
+        public Croisiere(string imo, string nom, double latitude, double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMax, List<Passager> passagers)
+            :base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
+        {
+            this.typeNavireCroisiere = typeNavireCroisiere;
+            this.nbPassagersMax = nbPassagersMax;
+            foreach(Passager p in passagers)
+            {
+                this.passagers.Add(p.NumPasseport, p);
+            }
+        }
+
         public string TypeNavireCroisiere { get => typeNavireCroisiere;
             set
             {
@@ -29,6 +40,9 @@ namespace Interfaces.ClassesMetier
                 else { throw new GestionPortException("Non."); }
             } 
         }
+
+        public int NbPassagersMax { get => nbPassagersMax; }
+        public Dictionary<string, Passager> Passagers { get => passagers; }
 
         public void Embarquer(List<object> objects)
         {
