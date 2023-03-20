@@ -10,7 +10,7 @@ namespace Interfaces.ClassesMetier
     {
         private string typeFret;
 
-        public Cargo(string imo, string nom, double latitude, double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeFret)
+        public Cargo(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeFret)
             :base(imo, nom, latitude, longitude,  tonnageActuel,  tonnageGT, tonnageDWT)
         {
             this.typeFret = typeFret;

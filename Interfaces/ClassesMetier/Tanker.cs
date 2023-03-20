@@ -9,9 +9,9 @@ namespace Interfaces.ClassesMetier
     {
         private string typeFluide;
 
-        public Tanker(string imo, string nom, double latitude, 
-            double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeFluide)
-            :base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
+        public Tanker(string imo, string nom, string latitude, 
+            string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeFluide)
+            :base(imo,nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
         {
             this.typeFluide = typeFluide;
         }

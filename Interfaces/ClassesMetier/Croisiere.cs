@@ -12,14 +12,14 @@ namespace Interfaces.ClassesMetier
         private int nbPassagersMax;
         private Dictionary<string, Passager> passagers = new Dictionary<string, Passager>();
 
-        public Croisiere(string imo, string nom, double latitude, double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMax)
+        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMax)
             :base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
         {
             this.TypeNavireCroisiere = typeNavireCroisiere;
             this.nbPassagersMax = nbPassagersMax;
         }
 
-        public Croisiere(string imo, string nom, double latitude, double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMax, List<Passager> passagers)
+        public Croisiere(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT, string typeNavireCroisiere, int nbPassagersMax, List<Passager> passagers)
             :base(imo, nom, latitude, longitude, tonnageActuel, tonnageGT, tonnageDWT)
         {
             this.typeNavireCroisiere = typeNavireCroisiere;

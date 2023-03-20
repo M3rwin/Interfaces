@@ -9,16 +9,16 @@ namespace Interfaces.ClassesMetier
     {
         protected readonly string imo;
         protected readonly string nom;
-        protected double latitude;
-        protected double longitude;
+        protected string latitude;
+        protected string longitude;
         protected int tonnageActuel;
         protected int tonnageGT;
         protected int tonnageDWT;
 
         public string Imo { get => imo;}
         public string Nom { get => nom;}
-        public double Latitude { get => latitude; set => latitude = value; }
-        public double Longitude { get => longitude; set => longitude = value; }
+        public string Latitude { get => latitude; set => latitude = value; }
+        public string Longitude { get => longitude; set => longitude = value; }
         public int TonnageActuel
         {
             get => tonnageActuel;
@@ -42,7 +42,7 @@ namespace Interfaces.ClassesMetier
         public int TonnageGT { get => tonnageGT;}
         public int TonnageDWT { get => tonnageDWT; }
 
-        protected Navire(string imo, string nom, double latitude, double longitude, int tonnageActuel, int tonnageGT, int tonnageDWT)
+        protected Navire(string imo, string nom, string latitude, string longitude, int tonnageActuel, int tonnageGT, int tonnageDWT)
         {
             this.imo = imo;
             this.nom = nom;

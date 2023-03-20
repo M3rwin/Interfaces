@@ -9,7 +9,7 @@ namespace Interfaces
     {
         static Dictionary<int, int> ItineraireDechargeNavire(Navire navire, int qte)
         {
-
+            return new Dictionary<int, int>();
         }
     }
 }

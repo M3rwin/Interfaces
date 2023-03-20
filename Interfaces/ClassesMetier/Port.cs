@@ -54,7 +54,7 @@ namespace Interfaces.ClassesMetier
         internal Dictionary<string, Navire> NavireArrives { get => navireArrives; set => navireArrives = value; }
         internal Dictionary<string, Navire> NavirePartis { get => navirePartis; set => navirePartis = value; }
         internal Dictionary<string, Navire> NavireEnAttente { get => navireEnAttente; set => navireEnAttente = value; }
-        internal Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
+        public Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
 
         // Méthodes Enregistrer 
 
@@ -283,6 +283,27 @@ namespace Interfaces.ClassesMetier
                 }
             }
             return cpt;
+        }
+
+
+
+        public override string ToString()
+        {
+            string message = $@"Port de {this.nom} :
+    Coordonnées GPS : {this.latitude} / {this.longitude}
+    Nb portiques : {this.nbPortique}
+    Nb quais croisière : {this.nbQuaisPassager}
+    Nb quais tanker : {this.nbQuaisTanker}
+    Nb quais SuperTanker : {this.nBQuaisSuperTanker}
+    Nb navires à quai : {this.navireArrives.Count}
+    Nb navires attendus : {this.navireAttendus.Count}
+    Nb navires à partir : {this.navirePartis.Count}
+    Nb navires en attente : {this.navireEnAttente.Count}
+
+Nombre de cargos dans le port : {GetNbCargoArrives()}
+Nombre de tankers dans le port : {GetNbTankerArrives()}
+Nombre de super tankers dans le port : {GetNbSuperTankerArrives()}";
+            return message;
         }
 
     }
