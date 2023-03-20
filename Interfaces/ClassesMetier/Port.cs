@@ -21,6 +21,7 @@ namespace Interfaces.ClassesMetier
         private Dictionary<string, Navire> navireArrives = new Dictionary<string, Navire>();
         private Dictionary<string, Navire> navirePartis = new Dictionary<string, Navire>();
         private Dictionary<string, Navire> navireEnAttente = new Dictionary<string, Navire>();
+        private Dictionary<int, Stockage> stockages = new Dictionary<int, Stockage>();
 
 
         // Constructeur
@@ -53,6 +54,7 @@ namespace Interfaces.ClassesMetier
         internal Dictionary<string, Navire> NavireArrives { get => navireArrives; set => navireArrives = value; }
         internal Dictionary<string, Navire> NavirePartis { get => navirePartis; set => navirePartis = value; }
         internal Dictionary<string, Navire> NavireEnAttente { get => navireEnAttente; set => navireEnAttente = value; }
+        internal Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
 
         // Méthodes Enregistrer 
 
