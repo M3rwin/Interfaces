@@ -238,11 +238,50 @@ namespace Interfaces.ClassesMetier
         {
             return this.NavireArrives[imo];
         }
-        public Object GetUUnParti(string imo)
+        public Object GetUnParti(string imo)
         {
             return this.navirePartis[imo];
         }
+        public int GetNbTankerArrives()
+        {
+            int cpt=0;
+            foreach(KeyValuePair<string, Navire> cle in navireArrives)
+            {
+                if (cle.Value.TonnageGT <= 130000 && cle.Value.GetType().Name=="Tanker")
+                {
+                    cpt += 1;
+                }
+            }
+            return cpt;
+        }
 
+
+        public int GetNbSuperTankerArrives()
+        {
+            int cpt = 0;
+            foreach (KeyValuePair<string, Navire> cle in navireArrives)
+            {
+                if (cle.Value.TonnageGT >= 130000)
+                {
+                    cpt += 1;
+                }
+            }
+            return cpt;
+        }
+
+
+        public int GetNbCargoArrives()
+        {
+            int cpt = 0;
+            foreach (KeyValuePair<string, Navire> cle in navireArrives)
+            {
+                if (cle.Value.GetType().Name == "Cargo")
+                {
+                    cpt += 1;
+                }
+            }
+            return cpt;
+        }
 
     }
 }
