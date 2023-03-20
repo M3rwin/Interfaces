@@ -70,7 +70,7 @@ namespace Interfaces.ClassesMetier
                 {
                     if(nav.TonnageGT > 130000)
                     {
-                        if(nBQuaisSuperTanker-1 <= 0)
+                        if(nBQuaisSuperTanker-1 < 0)
                         {
                             Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
                             this.navireEnAttente.Add(nav.Imo, nav);
@@ -79,7 +79,7 @@ namespace Interfaces.ClassesMetier
                     }
                     else
                     {
-                        if(nbQuaisTanker-1 <= 0)
+                        if(nbQuaisTanker-1 < 0)
                         {
                             Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
                             this.navireEnAttente.Add(nav.Imo, nav);
@@ -188,7 +188,60 @@ namespace Interfaces.ClassesMetier
             }
         }
 
-        //Methodes Verification
+
+        public bool EstAttendu(string imo)
+        {
+            return this.NavireAttendus.ContainsKey(imo);
+        }
+
+        public bool EstPresent(string imo)
+        {
+            return this.navireArrives.ContainsKey(imo);
+        }
+        
+
+        public bool EstEnAttente(string imo)
+        {
+            return this.navireEnAttente.ContainsKey(imo);
+        }
+
+
+        public void Chargement(string imo, int qte)
+        {
+            Navire navire = this.navireArrives[imo];
+            if(navire.TonnageActuel+qte <= navire.TonnageDWT)
+            {
+                navire.TonnageActuel += qte;
+            }
+            else { throw new GestionPortException("Capacité insuffisante."); }
+        }
+
+
+        public void Dechargement(string imo, int qte)
+        {
+            Navire navire = this.navireArrives[imo];
+            if(navire.TonnageActuel-qte >= 0)
+            {
+                navire.TonnageActuel -= qte;
+            }
+            else { throw new GestionPortException("Le bateau ne contient pas autant de chargement."); }
+        }
+
+
+        //Methodes Get
+
+        public Object GetUnAttendu(string imo)
+        {
+            return this.navireAttendus[imo];
+        }
+        public Object GetUnArrive(string imo)
+        {
+            return this.NavireArrives[imo];
+        }
+        public Object GetUUnParti(string imo)
+        {
+            return this.navirePartis[imo];
+        }
 
 
     }
