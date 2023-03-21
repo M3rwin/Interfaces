@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Interfaces.ClassesMetier
 {
-    abstract class Navire
+    public class Navire
     {
         protected readonly string imo;
         protected readonly string nom;

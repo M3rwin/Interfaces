@@ -12,7 +12,6 @@ namespace Interfaces
 
                 Port monPort = new Port("Toulon", "43.2976N", "5.3471E", 4, 3, 2, 4);
                 Console.WriteLine(monPort);
-                Test.
 
             }catch(Exception ex)
             {

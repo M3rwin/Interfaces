@@ -5,7 +5,7 @@ using Interfaces.ClassesMetier;
 
 namespace Interfaces.ClassesTechniques
 {
-    public abstract class Test
+    public class Test
     {
         public static void ChargementInitial(Port port)
         {

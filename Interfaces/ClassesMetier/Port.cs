@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Interfaces.ClassesMetier
 {
-    class Port
+    public class Port
     {
 
         // Attributs
@@ -54,7 +54,7 @@ namespace Interfaces.ClassesMetier
         internal Dictionary<string, Navire> NavireArrives { get => navireArrives; set => navireArrives = value; }
         internal Dictionary<string, Navire> NavirePartis { get => navirePartis; set => navirePartis = value; }
         internal Dictionary<string, Navire> NavireEnAttente { get => navireEnAttente; set => navireEnAttente = value; }
-        public Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
+        internal Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
 
         // Méthodes Enregistrer 
 
