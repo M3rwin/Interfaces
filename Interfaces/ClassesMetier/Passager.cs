@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Interfaces.ClassesMetier
 {
-    class Passager
+    public class Passager
     {
         private readonly string numPasseport;
         private readonly string nom;
