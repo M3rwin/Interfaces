@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Interfaces.Interfaces;
 
 namespace Interfaces.ClassesMetier
 {
-    public class Port
+    public class Port : IStationnable
     {
 
         // Attributs
@@ -35,6 +36,7 @@ namespace Interfaces.ClassesMetier
             this.nbQuaisPassager = nbQuaisPassager;
             this.nbQuaisTanker = nbQuaisTanker;
             this.nBQuaisSuperTanker = nBQuaisSuperTanker;
+            
         }
 
 
@@ -56,56 +58,32 @@ namespace Interfaces.ClassesMetier
         internal Dictionary<string, Navire> NavireEnAttente { get => navireEnAttente; set => navireEnAttente = value; }
         internal Dictionary<int, Stockage> Stockages { get => stockages; set => stockages = value; }
 
-        // Méthodes Enregistrer 
+        // Méthodes
 
-        public void EnregistrerArriveePrevue(Navire nav)
+        public void EnregistrerArrivePrevue(Navire nav)
         {
-            this.NavireAttendus.Add(nav.Imo, nav);
+            if(NavireAttendus.ContainsValue(nav)){
+                throw new GestionPortException($"Le navire {nav.Imo} est déjà enregistré dans les navires attendus");
+            }
+               this.NavireAttendus.Add(nav.Imo, nav);
         }
 
 
         public void EnregistrerArrivee(Navire nav)
         {
-            if (this.NavireAttendus.ContainsKey(nav.Imo))
+            if (this.NavireAttendus.ContainsKey(nav.Imo) && !this.navireArrives.ContainsKey(nav.Imo))
             {
                 if(nav is Tanker)
                 {
-                    if(nav.TonnageGT > 130000)
-                    {
-                        if(nBQuaisSuperTanker-1 < 0)
-                        {
-                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                            this.navireEnAttente.Add(nav.Imo, nav);
-                        }
-                        else { nBQuaisSuperTanker--; this.navireArrives.Add(nav.Imo, nav); }
-                    }
-                    else
-                    {
-                        if(nbQuaisTanker-1 < 0)
-                        {
-                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                            this.navireEnAttente.Add(nav.Imo, nav);
-                        }
-                        else { nbQuaisTanker--; this.navireArrives.Add(nav.Imo, nav); }
-                    }
+                    EnregistrerArrivee((Tanker)nav);
                 }
                 else if(nav is Cargo)
                 {
-                    if(nbPortique-1 <= 0)
-                    {
-                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                        this.navireEnAttente.Add(nav.Imo, nav);
-                    }
-                    else { nbPortique--; this.navireArrives.Add(nav.Imo, nav); }
+                    EnregistrerArrivee((Cargo)nav);
                 }
                 else if(nav is Croisiere)
                 {
-                    if(nbQuaisPassager-1 <= 0)
-                    {
-                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                        this.navireEnAttente.Add(nav.Imo, nav);
-                    }
-                    else { nbQuaisPassager--; this.navireArrives.Add(nav.Imo, nav); }
+                    EnregistrerArrivee((Croisiere)nav);
                 }
             }
             else
@@ -113,10 +91,50 @@ namespace Interfaces.ClassesMetier
                 throw new GestionPortException("Le navire n'est pas attendu");
             }
         }
+        public void EnregistrerArrivee(Cargo car)
+        {
+            if (nbPortique - 1 <= 0)
+            {
+                Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                this.navireEnAttente.Add(car.Imo, car);
+            }
+            else { nbPortique--; this.navireArrives.Add(car.Imo, car); }
+        }
+        public void EnregistrerArrivee(Tanker tank)
+        {
+            if (tank.TonnageGT > 130000)
+            {
+                if (nBQuaisSuperTanker - 1 < 0)
+                {
+                    Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                    this.navireEnAttente.Add(tank.Imo, tank);
+                }
+                else { nBQuaisSuperTanker--; this.navireArrives.Add(tank.Imo, tank); }
+            }
+            else
+            {
+                if (nbQuaisTanker - 1 < 0)
+                {
+                    Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                    this.navireEnAttente.Add(tank.Imo, tank);
+                }
+                else { nbQuaisTanker--; this.navireArrives.Add(tank.Imo, tank); }
+            }
+        }
+        public void EnregistrerArrivee(Croisiere crois)
+        {
+            if (nbQuaisPassager - 1 <= 0)
+            {
+                Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
+                this.navireEnAttente.Add(crois.Imo, crois);
+            }
+            else { nbQuaisPassager--; this.navireArrives.Add(crois.Imo, crois); }
+        }
+
 
         public void EnregistrerArrivee(string imo)
         {
-            if (this.NavireAttendus.ContainsKey(imo))
+            if (this.NavireAttendus.ContainsKey(imo) && !this.navireArrives.ContainsKey(imo))
             {
                 Navire nav = this.navireAttendus[imo];
                 if (nav is Tanker)
@@ -161,22 +179,25 @@ namespace Interfaces.ClassesMetier
             }
             else
             {
-                throw new GestionPortException("Le navire n'est pas attendu");
+                throw new GestionPortException("Le navire n'est pas attendu ou est déjà arrivé");
             }
         }
         
 
-        public void EnregistrerDepart(Navire nav)
+        public void EnregistrerDepart(string imo)
         {
-            if (this.NavireArrives.ContainsKey(nav.Imo))
+            if (this.NavireArrives.ContainsKey(imo))
             {
-                this.navireArrives.Remove(nav.Imo);
-                this.NavirePartis.Add(nav.Imo, nav);
+                Navire n = this.navireArrives[imo];
+                this.navireArrives.Remove(imo);
+                this.NavirePartis.Add(imo, n);
             }else
             {
                 throw new GestionPortException("Le Navire n'est pas arrivé dans le port");
             }
         }
+
+
         public void AjoutNavireEnAttente(Navire nav)
         {
             if (this.NavireAttendus.ContainsKey(nav.Imo))
@@ -195,6 +216,7 @@ namespace Interfaces.ClassesMetier
         {
             return this.NavireAttendus.ContainsKey(imo);
         }
+
 
         public bool EstPresent(string imo)
         {
@@ -256,8 +278,6 @@ namespace Interfaces.ClassesMetier
             }
             return cpt;
         }
-
-
         public int GetNbSuperTankerArrives()
         {
             int cpt = 0;
@@ -270,8 +290,6 @@ namespace Interfaces.ClassesMetier
             }
             return cpt;
         }
-
-
         public int GetNbCargoArrives()
         {
             int cpt = 0;
@@ -286,7 +304,7 @@ namespace Interfaces.ClassesMetier
         }
 
 
-
+        //Override
         public override string ToString()
         {
             string message = $@"Port de {this.nom} :
@@ -303,6 +321,8 @@ namespace Interfaces.ClassesMetier
 Nombre de cargos dans le port : {GetNbCargoArrives()}
 Nombre de tankers dans le port : {GetNbTankerArrives()}
 Nombre de super tankers dans le port : {GetNbSuperTankerArrives()}";
+
+
             return message;
         }
 

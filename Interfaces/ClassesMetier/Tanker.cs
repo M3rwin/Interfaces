@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Interfaces.ClassesMetier
 {
-    class Tanker :Navire, INavCommercable
+    public class Tanker :Navire, INavCommercable
     {
         private string typeFluide;
 

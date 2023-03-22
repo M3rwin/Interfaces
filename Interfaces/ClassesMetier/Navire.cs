@@ -48,9 +48,9 @@ namespace Interfaces.ClassesMetier
             this.nom = nom;
             this.latitude = latitude;
             this.longitude = longitude;
-            this.TonnageActuel = tonnageActuel;
             this.tonnageGT = tonnageGT;
             this.tonnageDWT = tonnageDWT;
+            this.TonnageActuel = tonnageActuel;
         }
 
 

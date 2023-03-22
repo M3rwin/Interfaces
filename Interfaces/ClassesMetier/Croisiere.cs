@@ -6,7 +6,7 @@ using Interfaces.Interfaces;
 
 namespace Interfaces.ClassesMetier
 {
-    class Croisiere : Navire, ICroisiere
+    public class Croisiere : Navire, ICroisiere
     {
         private string typeNavireCroisiere;
         private int nbPassagersMax;

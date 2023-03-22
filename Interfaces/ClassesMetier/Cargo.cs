@@ -6,7 +6,7 @@ using Interfaces.Interfaces;
 
 namespace Interfaces.ClassesMetier
 {
-    class Cargo : Navire, INavCommercable
+    public class Cargo : Navire, INavCommercable
     {
         private string typeFret;
 
