@@ -69,29 +69,8 @@ namespace Interfaces.ClassesMetier
         }
 
 
-        public void EnregistrerArrivee(Navire nav)
-        {
-            if (this.NavireAttendus.ContainsKey(nav.Imo) && !this.navireArrives.ContainsKey(nav.Imo))
-            {
-                if(nav is Tanker)
-                {
-                    EnregistrerArrivee((Tanker)nav);
-                }
-                else if(nav is Cargo)
-                {
-                    EnregistrerArrivee((Cargo)nav);
-                }
-                else if(nav is Croisiere)
-                {
-                    EnregistrerArrivee((Croisiere)nav);
-                }
-            }
-            else
-            {
-                throw new GestionPortException("Le navire n'est pas attendu");
-            }
-        }
-        public void EnregistrerArrivee(Cargo car)
+
+        private void EnregistrerArrivee(Cargo car)
         {
             if (nbPortique - 1 <= 0)
             {
@@ -100,7 +79,7 @@ namespace Interfaces.ClassesMetier
             }
             else { nbPortique--; this.navireArrives.Add(car.Imo, car); }
         }
-        public void EnregistrerArrivee(Tanker tank)
+        private void EnregistrerArrivee(Tanker tank)
         {
             if (tank.TonnageGT > 130000)
             {
@@ -121,7 +100,7 @@ namespace Interfaces.ClassesMetier
                 else { nbQuaisTanker--; this.navireArrives.Add(tank.Imo, tank); }
             }
         }
-        public void EnregistrerArrivee(Croisiere crois)
+        private void EnregistrerArrivee(Croisiere crois)
         {
             if (nbQuaisPassager - 1 <= 0)
             {
@@ -134,52 +113,24 @@ namespace Interfaces.ClassesMetier
 
         public void EnregistrerArrivee(string imo)
         {
-            if (this.NavireAttendus.ContainsKey(imo) && !this.navireArrives.ContainsKey(imo))
+            if (this.NavireAttendus.ContainsKey(nav.Imo) && !this.navireArrives.ContainsKey(nav.Imo))
             {
-                Navire nav = this.navireAttendus[imo];
                 if (nav is Tanker)
                 {
-                    if (nav.TonnageGT > 130000)
-                    {
-                        if (nBQuaisSuperTanker - 1 <= 0)
-                        {
-                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                            this.navireEnAttente.Add(nav.Imo, nav);
-                        }
-                        else { nBQuaisSuperTanker--; this.navireArrives.Add(nav.Imo, nav); }
-                    }
-                    else
-                    {
-                        if (nbQuaisTanker - 1 <= 0)
-                        {
-                            Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                            this.navireEnAttente.Add(nav.Imo, nav);
-                        }
-                        else { nbQuaisTanker--; this.navireArrives.Add(nav.Imo, nav); }
-                    }
+                    EnregistrerArrivee((Tanker)nav);
                 }
                 else if (nav is Cargo)
                 {
-                    if (nbPortique - 1 <= 0)
-                    {
-                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                        this.navireEnAttente.Add(nav.Imo, nav);
-                    }
-                    else { nbPortique--; this.navireArrives.Add(nav.Imo, nav); }
+                    EnregistrerArrivee((Cargo)nav);
                 }
                 else if (nav is Croisiere)
                 {
-                    if (nbQuaisPassager - 1 <= 0)
-                    {
-                        Console.WriteLine("Plus de quais disponible, plassé en file d'attente");
-                        this.navireEnAttente.Add(nav.Imo, nav);
-                    }
-                    else { nbQuaisPassager--; this.navireArrives.Add(nav.Imo, nav); }
+                    EnregistrerArrivee((Croisiere)nav);
                 }
             }
             else
             {
-                throw new GestionPortException("Le navire n'est pas attendu ou est déjà arrivé");
+                throw new GestionPortException("Le navire n'est pas attendu");
             }
         }
         
