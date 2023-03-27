@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Interfaces.Interfaces;
+using System.Linq;
 
 namespace Interfaces.ClassesMetier
 {
@@ -113,8 +114,9 @@ namespace Interfaces.ClassesMetier
 
         public void EnregistrerArrivee(string imo)
         {
-            if (this.NavireAttendus.ContainsKey(nav.Imo) && !this.navireArrives.ContainsKey(nav.Imo))
+            if (this.NavireAttendus.ContainsKey(imo) && !this.navireArrives.ContainsKey(imo))
             {
+                Navire nav = this.navireAttendus[imo];
                 if (nav is Tanker)
                 {
                     EnregistrerArrivee((Tanker)nav);
@@ -142,6 +144,7 @@ namespace Interfaces.ClassesMetier
                 Navire n = this.navireArrives[imo];
                 this.navireArrives.Remove(imo);
                 this.NavirePartis.Add(imo, n);
+                this.navireArrives.Add(this.navireEnAttente.ElementAtOrDefault() ;
             }else
             {
                 throw new GestionPortException("Le Navire n'est pas arrivé dans le port");
